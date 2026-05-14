@@ -1,0 +1,27 @@
+/* Design tokens — Quiet Luxury palette */
+:root {
+  --color-charcoal: #141414;
+  --color-charcoal-soft: #1f1f1f;
+  --color-champagne: #c5a572;
+  --color-champagne-muted: rgba(197, 165, 114, 0.35);
+  --color-paper: #fafafa;
+  --color-ink: #2a2a2a;
+  --font-serif: "Cormorant Garamond", "Times New Roman", serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-serif);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

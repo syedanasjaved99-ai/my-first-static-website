@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About — Aurelia Private Estates</title>
+  <meta name="description" content="Heritage, discretion, and excellence in luxury real estate advisory." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          colors: { charcoal: '#141414', champagne: '#c5a572', paper: '#fafafa' },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="css/tokens.css" />
+</head>
+<body class="bg-paper font-sans font-light text-charcoal antialiased">
+  <a href="#main-content" class="fixed left-4 top-0 z-[100] -translate-y-full bg-champagne px-4 py-2 text-xs font-medium uppercase tracking-[0.2em] text-charcoal opacity-0 shadow-md transition-all duration-200 focus:top-20 focus:translate-y-0 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-charcoal/15">Skip to content</a>
+  <div id="site-header-mount" data-component="site-header"></div>
+
+  <main id="main-content" class="pt-28 md:pt-32">
+    <header class="relative overflow-hidden bg-charcoal text-white">
+      <div class="absolute inset-0 opacity-30">
+        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=2000&q=80" alt="" class="h-full w-full object-cover" role="presentation" width="2000" height="1200" />
+      </div>
+      <div class="absolute inset-0 bg-gradient-to-r from-charcoal via-charcoal/90 to-charcoal/70"></div>
+      <div class="relative mx-auto max-w-7xl px-5 py-24 md:px-8 md:py-32">
+        <p class="text-xs uppercase tracking-[0.45em] text-champagne">Heritage</p>
+        <h1 class="mt-6 max-w-3xl font-serif text-4xl leading-tight md:text-6xl">Four decades of quiet excellence.</h1>
+        <p class="mt-8 max-w-xl text-sm leading-relaxed text-white/65 md:text-base">Founded as a family office for property stewardship, Aurelia evolved into a global advisory—always private, always precise.</p>
+      </div>
+    </header>
+
+    <section class="py-20 md:py-28" aria-labelledby="excellence-heading" id="about-excellence" data-api-section="about-excellence">
+      <div class="mx-auto grid max-w-7xl gap-16 px-5 md:grid-cols-2 md:items-center md:gap-20 md:px-8">
+        <div>
+          <p class="text-xs uppercase tracking-[0.4em] text-champagne">Excellence</p>
+          <h2 id="excellence-heading" class="mt-4 font-serif text-4xl md:text-5xl">The discipline behind the door.</h2>
+          <p class="mt-8 text-sm leading-relaxed text-charcoal/70 md:text-base">We vet architecture, provenance, and liquidity with equal rigor. Our clients meet fewer homes—each one already cleared for alignment with lifestyle, legacy, and capital preservation.</p>
+          <ul class="mt-10 space-y-4 text-sm text-charcoal/75">
+            <li class="flex gap-3"><span class="mt-1.5 h-px w-8 flex-shrink-0 bg-champagne/60"></span>Principal-led negotiations, never delegated to junior pipelines.</li>
+            <li class="flex gap-3"><span class="mt-1.5 h-px w-8 flex-shrink-0 bg-champagne/60"></span>Cross-border counsel with vetted legal and tax partners.</li>
+            <li class="flex gap-3"><span class="mt-1.5 h-px w-8 flex-shrink-0 bg-champagne/60"></span>White-glove transitions—from art installation to household staffing.</li>
+          </ul>
+        </div>
+        <article class="border border-charcoal/5 bg-white p-10 md:p-14">
+          <h3 class="font-serif text-2xl">Principles</h3>
+          <p class="mt-6 text-sm leading-relaxed text-charcoal/65">Discretion is not secrecy—it is respect for narrative. We publish sparingly, speak carefully, and protect the reputations attached to every address we touch.</p>
+          <p class="mt-6 text-xs uppercase tracking-[0.28em] text-charcoal/35" data-api-placeholder="about-stats">API: firm stats / timeline</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="border-y border-charcoal/5 bg-white py-20 md:py-28" aria-label="Leadership">
+      <div class="mx-auto max-w-7xl px-5 md:px-8">
+        <p class="text-xs uppercase tracking-[0.4em] text-champagne">Principals</p>
+        <h2 class="mt-3 font-serif text-3xl md:text-4xl">A small circle. A singular standard.</h2>
+        <div class="mt-14 grid gap-12 md:grid-cols-3" id="about-team-grid" data-api-slot="team-members">
+          <article>
+            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=80" alt="Portrait placeholder" class="aspect-[3/4] w-full object-cover grayscale" width="600" height="800" />
+            <h3 class="mt-6 font-serif text-xl">James Calder</h3>
+            <p class="mt-2 text-xs uppercase tracking-[0.2em] text-champagne">Founding Principal</p>
+          </article>
+          <article>
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80" alt="Portrait placeholder" class="aspect-[3/4] w-full object-cover grayscale" width="600" height="800" />
+            <h3 class="mt-6 font-serif text-xl">Elena Voss</h3>
+            <p class="mt-2 text-xs uppercase tracking-[0.2em] text-champagne">Global Advisory</p>
+          </article>
+          <article>
+            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=600&q=80" alt="Portrait placeholder" class="aspect-[3/4] w-full object-cover grayscale" width="600" height="800" />
+            <h3 class="mt-6 font-serif text-xl">Marcus Reid</h3>
+            <p class="mt-2 text-xs uppercase tracking-[0.2em] text-champagne">Capital Markets</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer-mount" data-component="site-footer"></div>
+  <script src="js/site-shell.js" defer></script>
+</body>
+</html>

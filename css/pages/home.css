@@ -1,0 +1,105 @@
+/**
+ * Homepage-only styles — complements Tailwind + tokens.css.
+ * Keeps index.html lean; easy to merge into a build pipeline later.
+ */
+
+/* Hero: soft vignette over photography (content stays above via z-index in markup) */
+.home-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(ellipse 100% 65% at 50% 100%, rgba(0, 0, 0, 0.55), transparent 52%);
+}
+
+/* Highlights moodboard: slow zoom on hover */
+.home-moodboard__cell img {
+  display: block;
+  transition: transform 0.75s ease;
+}
+
+.home-moodboard__cell:hover img {
+  transform: scale(1.06);
+}
+
+/* Testimonials: banner image drift */
+.home-testimonial > div:first-child img {
+  transition: transform 0.8s ease;
+}
+
+.home-testimonial:hover > div:first-child img {
+  transform: scale(1.05);
+}
+
+/* FAQ: native disclosure, styled for luxury UI */
+.home-faq details {
+  border-bottom: 1px solid rgba(20, 20, 20, 0.08);
+}
+
+.home-faq details:last-of-type {
+  border-bottom: none;
+}
+
+.home-faq summary {
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+}
+
+.home-faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.home-faq summary::after {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border-right: 1px solid var(--color-champagne);
+  border-bottom: 1px solid var(--color-champagne);
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+  margin-left: 1rem;
+}
+
+.home-faq details[open] summary::after {
+  transform: rotate(-135deg);
+  margin-top: 0.25rem;
+}
+
+/* Gallery: subtle lift on focus/hover for keyboard users */
+.home-gallery-tile {
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.home-gallery-tile:hover,
+.home-gallery-tile:focus-within {
+  transform: translateY(-2px);
+  box-shadow: 0 24px 48px rgba(20, 20, 20, 0.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-gallery-tile {
+    transition: none;
+  }
+
+  .home-gallery-tile:hover,
+  .home-gallery-tile:focus-within {
+    transform: none;
+  }
+
+  .home-faq summary::after {
+    transition: none;
+  }
+
+  .home-hero::after {
+    background: none;
+  }
+
+  .home-moodboard__cell img,
+  .home-testimonial > div:first-child img {
+    transition: none;
+    transform: none;
+  }
+}

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aurelia Private Estates — Quiet Luxury Residences</title>
+  <meta name="description" content="Curated luxury real estate for discerning clients. Private viewings, global portfolio." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            charcoal: '#141414',
+            champagne: '#c5a572',
+            paper: '#fafafa',
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/pages/home.css" />
+</head>
+<body class="bg-paper font-sans font-light text-charcoal antialiased">
+  <a href="#main-content" class="fixed left-4 top-0 z-[100] -translate-y-full bg-champagne px-4 py-2 text-xs font-medium uppercase tracking-[0.2em] text-charcoal opacity-0 shadow-md transition-all duration-200 focus:top-20 focus:translate-y-0 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-charcoal/15">Skip to content</a>
+  <div id="site-header-mount" data-component="site-header"></div>
+
+  <main id="main-content">
+    <!-- Hero: background video placeholder -->
+    <section class="home-hero relative min-h-[92vh] overflow-hidden bg-charcoal" aria-labelledby="hero-heading" data-api-section="hero">
+      <div class="absolute inset-0 z-0" id="hero-video-placeholder" data-api-slot="hero-video">
+        <div class="absolute inset-0 scale-105 bg-[url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=2000&q=80')] bg-cover bg-center opacity-50"></div>
+        <div class="absolute inset-0 bg-gradient-to-br from-charcoal/50 via-charcoal/30 to-charcoal/90"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-transparent to-charcoal/40"></div>
+        <div class="absolute inset-0 hidden items-center justify-center md:flex" aria-hidden="true">
+          <p class="rounded-full border border-white/20 bg-black/30 px-6 py-3 text-xs uppercase tracking-[0.35em] text-white/70 backdrop-blur-sm">Cinematic reel — embed video URL via API</p>
+        </div>
+      </div>
+      <div class="relative z-10 mx-auto flex min-h-[92vh] max-w-5xl flex-col justify-end px-5 pb-24 pt-40 md:px-8 md:pb-32">
+        <p class="text-xs uppercase tracking-[0.45em] text-champagne drop-shadow-sm">Private Portfolio</p>
+        <h1 id="hero-heading" class="mt-6 max-w-4xl font-serif text-5xl font-normal leading-[1.05] tracking-tight text-white drop-shadow-md md:text-7xl lg:text-8xl">Homes that<br /><span class="italic text-white/90">whisper</span> wealth.</h1>
+        <p class="mt-8 max-w-lg text-sm leading-relaxed text-white/70 md:text-base">Bespoke acquisitions, discreet sales, and long-term stewardship for families who value restraint as much as rarity.</p>
+        <div class="mt-12 flex flex-wrap gap-4">
+          <a href="properties.html" class="inline-flex border border-champagne/50 bg-champagne px-8 py-3 text-xs font-medium uppercase tracking-[0.25em] text-charcoal shadow-lg shadow-black/25 transition hover:bg-white hover:shadow-xl">View listings</a>
+          <a href="contact.html" class="inline-flex border border-white/30 bg-white/5 px-8 py-3 text-xs font-medium uppercase tracking-[0.25em] text-white backdrop-blur-sm transition hover:border-champagne hover:bg-white/10 hover:text-champagne">Request access</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured properties slider -->
+    <section class="border-b border-charcoal/5 bg-gradient-to-b from-white to-[#faf9f7] py-20 md:py-28" aria-labelledby="featured-heading" id="featured-properties-section" data-api-section="featured-properties">
+      <div class="mx-auto max-w-7xl px-5 md:px-8">
+        <div class="flex flex-col items-start justify-between gap-8 md:flex-row md:items-end">
+          <div>
+            <p class="text-xs uppercase tracking-[0.4em] text-champagne">Curated</p>
+            <h2 id="featured-heading" class="mt-3 font-serif text-4xl text-charcoal md:text-5xl">Featured properties</h2>
+          </div>
+          <div class="flex gap-3">
+            <button type="button" id="featured-slider-prev" class="flex h-12 w-12 items-center justify-center rounded-full border border-charcoal/10 text-charcoal transition hover:border-champagne hover:text-champagne" aria-label="Previous properties">
+              <span aria-hidden="true" class="text-lg">←</span>
+            </button>
+            <button type="button" id="featured-slider-next" class="flex h-12 w-12 items-center justify-center rounded-full border border-charcoal/10 text-charcoal transition hover:border-champagne hover:text-champagne" aria-label="Next properties">
+              <span aria-hidden="true" class="text-lg">→</span>
+            </button>
+          </div>
+        </div>
+        <div id="featured-slider-track" class="featured-slider mt-14 flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <article class="group relative w-[85vw] max-w-md flex-shrink-0 snap-start overflow-hidden rounded-md bg-charcoal shadow-2xl shadow-charcoal/20 ring-1 ring-charcoal/5 md:w-[28rem]" data-featured-card>
+            <a href="property-detail.html" class="block">
+              <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=900&q=80" alt="Coastal modern estate exterior" class="aspect-[4/5] w-full object-cover opacity-90 transition duration-700 group-hover:scale-[1.03] group-hover:opacity-100" width="900" height="1125" fetchpriority="high" decoding="async" />
+              <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/20 to-transparent"></div>
+              <div class="absolute bottom-0 left-0 right-0 p-8">
+                <p class="text-xs uppercase tracking-[0.3em] text-champagne">Malibu</p>
+                <h3 class="mt-2 font-serif text-2xl text-white">Villa Maris</h3>
+                <p class="mt-2 text-sm text-white/60">From $24,500,000</p>
+              </div>
+            </a>
+          </article>
+          <article class="group relative w-[85vw] max-w-md flex-shrink-0 snap-start overflow-hidden rounded-md bg-charcoal shadow-2xl shadow-charcoal/20 ring-1 ring-charcoal/5 md:w-[28rem]" data-featured-card>
+            <a href="property-detail.html" class="block">
+              <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=80" alt="Minimalist villa with pool" class="aspect-[4/5] w-full object-cover opacity-90 transition duration-700 group-hover:scale-[1.03] group-hover:opacity-100" width="900" height="1125" loading="lazy" decoding="async" />
+              <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/20 to-transparent"></div>
+              <div class="absolute bottom-0 left-0 right-0 p-8">
+                <p class="text-xs uppercase tracking-[0.3em] text-champagne">Aspen</p>
+                <h3 class="mt-2 font-serif text-2xl text-white">The Timberline</h3>
+                <p class="mt-2 text-sm text-white/60">From $18,900,000</p>
+              </div>
+            </a>
+          </article>
+          <article class="group relative w-[85vw] max-w-md flex-shrink-0 snap-start overflow-hidden rounded-md bg-charcoal shadow-2xl shadow-charcoal/20 ring-1 ring-charcoal/5 md:w-[28rem]" data-featured-card>
+            <a href="property-detail.html" class="block">
+              <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=80" alt="Contemporary home at dusk" class="aspect-[4/5] w-full object-cover opacity-90 transition duration-700 group-hover:scale-[1.03] group-hover:opacity-100" width="900" height="1125" loading="lazy" decoding="async" />
+              <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/20 to-transparent"></div>
+              <div class="absolute bottom-0 left-0 right-0 p-8">
+                <p class="text-xs uppercase tracking-[0.3em] text-champagne">Manhattan</p>
+                <h3 class="mt-2 font-serif text-2xl text-white">Skyline Residence</h3>
+                <p class="mt-2 text-sm text-white/60">From $32,000,000</p>
+              </div>
+            </a>
+          </article>
+          <article class="group relative w-[85vw] max-w-md flex-shrink-0 snap-start overflow-hidden rounded-md bg-charcoal shadow-2xl shadow-charcoal/20 ring-1 ring-charcoal/5 md:w-[28rem]" data-featured-card>
+            <a href="property-detail.html" class="block">
+              <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=900&q=80" alt="Tropical luxury estate with pool and palm trees" class="aspect-[4/5] w-full object-cover opacity-90 transition duration-700 group-hover:scale-[1.03] group-hover:opacity-100" width="900" height="1125" loading="lazy" decoding="async" />
+              <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/20 to-transparent"></div>
+              <div class="absolute bottom-0 left-0 right-0 p-8">
+                <p class="text-xs uppercase tracking-[0.3em] text-champagne">Palm Beach</p>
+                <h3 class="mt-2 font-serif text-2xl text-white">Casa Luminosa</h3>
+                <p class="mt-2 text-sm text-white/60">From $42,000,000</p>
+              </div>
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Highlights / differentiators -->
+    <section class="border-t border-charcoal/5 bg-[#fbfaf8] py-20 md:py-28" aria-labelledby="highlights-heading" id="highlights-section" data-api-section="highlights">
+      <div class="mx-auto max-w-7xl px-5 md:px-8">
+        <div class="mx-auto max-w-2xl text-center">
+          <p class="text-xs uppercase tracking-[0.4em] text-champagne">Why Aurelia</p>
+          <h2 id="highlights-heading" class="mt-3 font-serif text-4xl text-charcoal md:text-5xl">The details others rush past.</h2>
+          <p class="mt-6 text-sm leading-relaxed text-charcoal/65 md:text-base">A concierge-led experience built for principals, family offices, and founders who expect the same rigor from a residence as they do from any other portfolio asset.</p>
+        </div>
+        <div class="home-moodboard mt-14 grid grid-cols-3 gap-2 md:mt-20 md:gap-4" data-api-slot="highlights-moodboard" aria-hidden="true">
+          <div class="home-moodboard__cell overflow-hidden rounded-sm shadow-lg ring-1 ring-charcoal/5 md:translate-y-8">
+            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=600&q=80" alt="" class="aspect-[3/4] w-full object-cover" width="600" height="800" loading="lazy" decoding="async" />
+          </div>
+          <div class="home-moodboard__cell overflow-hidden rounded-sm shadow-lg ring-1 ring-charcoal/5">
+            <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=600&q=80" alt="" class="aspect-[3/4] w-full object-cover" width="600" height="800" loading="lazy" decoding="async" />
+          </div>
+          <div class="home-moodboard__cell overflow-hidden rounded-sm shadow-lg ring-1 ring-charcoal/5 md:-translate-y-6">
+            <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=600&q=80" alt="" class="aspect-[3/4] w-full object-cover" width="600" height="800" loading="lazy" decoding="async" />
+          </div>
+        </div>
+        <ul class="mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+          <li class="group rounded-md border border-charcoal/8 bg-white p-8 shadow-sm transition hover:border-champagne/40 hover:shadow-md">
+            <div class="flex h-11 w-11 items-center justify-center rounded-full border border-champagne/30 text-champagne transition group-hover:bg-champagne/10" aria-hidden="true">
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.25" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+            </div>
+            <h3 class="mt-6 font-serif text-xl text-charcoal">Principal-only access</h3>
+            <p class="mt-3 text-sm leading-relaxed text-charcoal/60">Off-market introductions and private viewings—never mass tours, never performative urgency.</p>
+          </li>
+          <li class="group rounded-md border border-charcoal/8 bg-white p-8 shadow-sm transition hover:border-champagne/40 hover:shadow-md">
+            <div class="flex h-11 w-11 items-center justify-center rounded-full border border-champagne/30 text-champagne transition group-hover:bg-champagne/10" aria-hidden="true">
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.25" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5 3v18m13-18v18M9 8.25h6M9 12h6M9 15.75h6" /></svg>
+            </div>
+            <h3 class="mt-6 font-serif text-xl text-charcoal">Due diligence, elevated</h3>
+            <p class="mt-3 text-sm leading-relaxed text-charcoal/60">Title, tax, and structure reviewed with institutional discipline—presented in language you can act on quickly.</p>
+          </li>
+          <li class="group rounded-md border border-charcoal/8 bg-white p-8 shadow-sm transition hover:border-champagne/40 hover:shadow-md">
+            <div class="flex h-11 w-11 items-center justify-center rounded-full border border-champagne/30 text-champagne transition group-hover:bg-champagne/10" aria-hidden="true">
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.25" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            </div>
+            <h3 class="mt-6 font-serif text-xl text-charcoal">Global bench</h3>
+            <p class="mt-3 text-sm leading-relaxed text-charcoal/60">Coordinated counsel across time zones—architecture, aviation, and estate planning aligned to the asset.</p>
+          </li>
+          <li class="group rounded-md border border-charcoal/8 bg-white p-8 shadow-sm transition hover:border-champagne/40 hover:shadow-md">
+            <div class="flex h-11 w-11 items-center justify-center rounded-full border border-champagne/30 text-champagne transition group-hover:bg-champagne/10" aria-hidden="true">
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.25" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" /></svg>
+            </div>
+            <h3 class="mt-6 font-serif text-xl text-charcoal">Long-term stewardship</h3>
+            <p class="mt-3 text-sm leading-relaxed text-charcoal/60">From discreet resale to generational holding strategies—we remain accountable after the ink dries.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Portfolio scope -->
+    <section class="home-portfolio relative overflow-hidden bg-charcoal pb-28 pt-20 text-white md:pb-36 md:pt-28" aria-labelledby="portfolio-heading" id="portfolio-section" data-api-section="portfolio">
+      <div class="pointer-events-none absolute inset-0 z-0 opacity-[0.07]" aria-hidden="true" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+      <div class="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-36 bg-gradient-to-b from-transparent via-charcoal to-white md:h-48" aria-hidden="true"></div>
+      <div class="relative z-10 mx-auto max-w-7xl px-5 md:px-8">
+        <div class="flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
+          <div class="max-w-xl">
+            <p class="text-xs uppercase tracking-[0.4em] text-champagne">Portfolio</p>
+            <h2 id="portfolio-heading" class="mt-3 font-serif text-4xl leading-tight md:text-5xl">Presence where capital concentrates.</h2>
+            <p class="mt-6 text-sm leading-relaxed text-white/60 md:text-base">A deliberately small book of markets—each chosen for liquidity, privacy culture, and architectural depth.</p>
+          </div>
+          <dl class="grid grid-cols-3 gap-6 border border-white/10 bg-white/[0.04] px-6 py-6 shadow-2xl shadow-black/30 backdrop-blur-md sm:gap-10 sm:px-10 sm:py-8 md:min-w-[24rem]">
+            <div>
+              <dt class="text-[0.65rem] font-medium uppercase tracking-[0.25em] text-white/40">Transaction volume</dt>
+              <dd class="mt-2 font-serif text-2xl text-champagne md:text-3xl" data-api-placeholder="portfolio-stat-volume">$2.4B+</dd>
+            </div>
+            <div>
+              <dt class="text-[0.65rem] font-medium uppercase tracking-[0.25em] text-white/40">Markets</dt>
+              <dd class="mt-2 font-serif text-2xl text-white md:text-3xl">14</dd>
+            </div>
+            <div>
+              <dt class="text-[0.65rem] font-medium uppercase tracking-[0.25em] text-white/40">Avg. days private</dt>
+              <dd class="mt-2 font-serif text-2xl text-white md:text-3xl">48</dd>
+            </div>
+          </dl>
+        </div>
+        <div class="mt-16 grid gap-6 md:grid-cols-3">
+          <a href="properties.html" class="group relative overflow-hidden rounded-md border border-white/10 bg-white/[0.04] shadow-xl shadow-black/20 ring-1 ring-inset ring-white/5 transition hover:border-champagne/40 hover:bg-white/[0.08] hover:shadow-2xl">
+            <div class="aspect-[16/10] overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=800&q=80" alt="Coastal skyline at golden hour" class="h-full w-full object-cover opacity-85 transition duration-700 group-hover:scale-[1.04] group-hover:opacity-100" width="800" height="500" loading="lazy" decoding="async" />
+            </div>
+            <div class="p-7">
+              <p class="text-xs uppercase tracking-[0.35em] text-champagne">Americas</p>
+              <h3 class="mt-2 font-serif text-2xl">Miami · Aspen · NYC</h3>
+              <p class="mt-3 text-sm text-white/55">Waterfront compounds, alpine retreats, and trophy penthouses.</p>
+              <span class="mt-5 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.22em] text-champagne">View corridor <span aria-hidden="true">→</span></span>
+            </div>
+          </a>
+          <a href="properties.html" class="group relative overflow-hidden rounded-md border border-white/10 bg-white/[0.04] shadow-xl shadow-black/20 ring-1 ring-inset ring-white/5 transition hover:border-champagne/40 hover:bg-white/[0.08] hover:shadow-2xl">
+            <div class="aspect-[16/10] overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1529655683826-aba9b3e77383?auto=format&fit=crop&w=800&q=80" alt="London skyline and River Thames at dusk" class="h-full w-full object-cover opacity-85 transition duration-700 group-hover:scale-[1.04] group-hover:opacity-100" width="800" height="500" loading="lazy" decoding="async" />
+            </div>
+            <div class="p-7">
+              <p class="text-xs uppercase tracking-[0.35em] text-champagne">Europe &amp; UK</p>
+              <h3 class="mt-2 font-serif text-2xl">London · Paris · Alps</h3>
+              <p class="mt-3 text-sm text-white/55">Heritage townhouses, pied-à-terre, and discreet alpine estates.</p>
+              <span class="mt-5 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.22em] text-champagne">View corridor <span aria-hidden="true">→</span></span>
+            </div>
+          </a>
+          <a href="properties.html" class="group relative overflow-hidden rounded-md border border-white/10 bg-white/[0.04] shadow-xl shadow-black/20 ring-1 ring-inset ring-white/5 transition hover:border-champagne/40 hover:bg-white/[0.08] hover:shadow-2xl">
+            <div class="aspect-[16/10] overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80" alt="Modern skyline at dusk" class="h-full w-full object-cover opacity-85 transition duration-700 group-hover:scale-[1.04] group-hover:opacity-100" width="800" height="500" loading="lazy" decoding="async" />
+            </div>
+            <div class="p-7">
+              <p class="text-xs uppercase tracking-[0.35em] text-champagne">Middle East</p>
+              <h3 class="mt-2 font-serif text-2xl">Dubai · Riyadh</h3>
+              <p class="mt-3 text-sm text-white/55">Sky villas, branded residences, and desert compounds.</p>
+              <span class="mt-5 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.22em] text-champagne">View corridor <span aria-hidden="true">→</span></span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="border-b border-charcoal/5 bg-gradient-to-b from-white to-[#faf9f7] py-20 md:py-28" aria-labelledby="gallery-heading" id="gallery-section" data-api-section="gallery">
+      <div class="mx-auto max-w-7xl px-5 md:px-8">
+        <div class="flex flex-col justify-between gap-8 md:flex-row md:items-end">
+          <div>
+            <p class="text-xs uppercase tracking-[0.4em] text-champagne">Gallery</p>
+            <h2 id="gallery-heading" class="mt-3 font-serif text-4xl text-charcoal md:text-5xl">Material, light, proportion.</h2>
+            <p class="mt-4 max-w-xl text-sm leading-relaxed text-charcoal/65 md:text-base">A visual vocabulary we return to again and again: honest stone, generous glazing, and rooms that breathe.</p>
+          </div>
+          <a href="properties.html" class="inline-flex w-max items-center rounded-sm border border-charcoal/15 bg-white px-6 py-3 text-xs font-medium uppercase tracking-[0.25em] text-charcoal shadow-sm transition hover:border-champagne hover:text-champagne">Browse all residences</a>
+        </div>
+        <div class="mt-14 grid grid-cols-2 gap-3 md:grid-cols-12 md:gap-4">
+          <figure class="home-gallery-tile relative col-span-2 overflow-hidden rounded-md md:col-span-7 md:row-span-2">
+            <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=80" alt="Open-plan living with floor-to-ceiling glass" class="aspect-[16/11] h-full w-full object-cover md:aspect-auto md:min-h-[28rem]" width="1400" height="933" loading="lazy" decoding="async" />
+            <figcaption class="pointer-events-none absolute bottom-0 left-0 right-0 bg-gradient-to-t from-charcoal/80 to-transparent p-6 pt-16 text-xs uppercase tracking-[0.25em] text-white/80">Great room — Pacific coast</figcaption>
+          </figure>
+          <figure class="home-gallery-tile relative col-span-1 overflow-hidden rounded-md md:col-span-5">
+            <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=900&q=80" alt="Minimal kitchen with stone island" class="aspect-[4/5] w-full object-cover md:aspect-[16/11]" width="900" height="1125" loading="lazy" decoding="async" />
+            <figcaption class="sr-only">Kitchen atrium</figcaption>
+          </figure>
+          <figure class="home-gallery-tile relative col-span-1 overflow-hidden rounded-md md:col-span-5">
+            <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=900&q=80" alt="Pool terrace at twilight" class="aspect-[4/5] w-full object-cover md:aspect-[16/11]" width="900" height="1125" loading="lazy" decoding="async" />
+            <figcaption class="sr-only">Pool terrace</figcaption>
+          </figure>
+          <figure class="home-gallery-tile relative col-span-2 overflow-hidden rounded-md md:col-span-6">
+            <img src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=1000&q=80" alt="Primary suite with sculptural lighting" class="aspect-[16/10] w-full object-cover" width="1000" height="625" loading="lazy" decoding="async" />
+            <figcaption class="sr-only">Primary suite</figcaption>
+          </figure>
+          <figure class="home-gallery-tile relative col-span-2 overflow-hidden rounded-md md:col-span-6">
+            <img src="https://images.unsplash.com/photo-1600573472592-401b489a3cdc?auto=format&fit=crop&w=1000&q=80" alt="Wine cellar with warm lighting" class="aspect-[16/10] w-full object-cover" width="1000" height="625" loading="lazy" decoding="async" />
+            <figcaption class="sr-only">Cellar lounge</figcaption>
+          </figure>
+        </div>
+        <div class="mt-4 grid grid-cols-2 gap-3 md:mt-5 md:grid-cols-3 md:gap-4">
+          <figure class="home-gallery-tile relative overflow-hidden rounded-md">
+            <img src="https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=900&q=80" alt="Minimal bedroom with linen and warm light" class="aspect-[4/3] w-full object-cover" width="900" height="675" loading="lazy" decoding="async" />
+            <figcaption class="pointer-events-none absolute bottom-0 left-0 right-0 bg-gradient-to-t from-charcoal/70 to-transparent p-4 text-[0.65rem] uppercase tracking-[0.2em] text-white/75">Primary suite — soft light</figcaption>
+          </figure>
+          <figure class="home-gallery-tile relative overflow-hidden rounded-md">
+            <img src="https://images.unsplash.com/photo-1600585154084-4e5fe7c39198?auto=format&fit=crop&w=900&q=80" alt="Double-height foyer with staircase" class="aspect-[4/3] w-full object-cover" width="900" height="675" loading="lazy" decoding="async" />
+            <figcaption class="pointer-events-none absolute bottom-0 left-0 right-0 bg-gradient-to-t from-charcoal/70 to-transparent p-4 text-[0.65rem] uppercase tracking-[0.2em] text-white/75">Entry sequence</figcaption>
+          </figure>
+          <figure class="home-gallery-tile relative col-span-2 overflow-hidden rounded-md md:col-span-1">
+            <img src="https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&w=900&q=80" alt="Outdoor lounge and landscaping at dusk" class="aspect-[4/3] w-full object-cover" width="900" height="675" loading="lazy" decoding="async" />
+            <figcaption class="pointer-events-none absolute bottom-0 left-0 right-0 bg-gradient-to-t from-charcoal/70 to-transparent p-4 text-[0.65rem] uppercase tracking-[0.2em] text-white/75">Garden room</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="bg-[#fbfaf8] py-20 md:py-28" aria-labelledby="testimonials-heading" id="testimonials-section" data-api-section="testimonials">
+      <div class="mx-auto max-w-7xl px-5 md:px-8">
+        <div class="mx-auto max-w-2xl text-center">
+          <p class="text-xs uppercase tracking-[0.4em] text-champagne">Client voices</p>
+          <h2 id="testimonials-heading" class="mt-3 font-serif text-4xl text-charcoal md:text-5xl">Trusted by those who value discretion.</h2>
+        </div>
+        <div class="mt-16 grid gap-8 lg:grid-cols-3">
+          <figure class="home-testimonial flex h-full flex-col overflow-hidden rounded-md border border-charcoal/8 bg-white shadow-md ring-1 ring-charcoal/[0.04]">
+            <div class="relative h-36 shrink-0 overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1600585154363-67eb9e2e2099?auto=format&fit=crop&w=800&q=80" alt="" class="h-full w-full object-cover" width="800" height="400" loading="lazy" decoding="async" aria-hidden="true" />
+              <div class="absolute inset-0 bg-gradient-to-t from-charcoal/50 to-transparent" aria-hidden="true"></div>
+            </div>
+            <div class="flex flex-1 flex-col p-8 pt-7">
+              <blockquote class="flex-1 font-serif text-xl leading-snug text-charcoal md:text-2xl">“No theatrics—only clarity. They protected our time and our reputation through a delicate cross-border sale.”</blockquote>
+              <figcaption class="mt-8 flex items-center gap-4 border-t border-charcoal/10 pt-6">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d8772a87a2?auto=format&fit=crop&w=112&h=112&q=80" alt="" class="h-14 w-14 shrink-0 rounded-full object-cover ring-2 ring-champagne/25" width="56" height="56" loading="lazy" decoding="async" aria-hidden="true" />
+                <div>
+                  <p class="text-sm font-medium text-charcoal">Elena V.</p>
+                  <p class="mt-1 text-xs uppercase tracking-[0.2em] text-charcoal/45">Family office principal · Geneva</p>
+                </div>
+              </figcaption>
+            </div>
+          </figure>
+          <figure class="home-testimonial flex h-full flex-col overflow-hidden rounded-md border border-charcoal/8 bg-white shadow-md ring-1 ring-charcoal/[0.04] lg:translate-y-4">
+            <div class="relative h-36 shrink-0 overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80" alt="" class="h-full w-full object-cover" width="800" height="400" loading="lazy" decoding="async" aria-hidden="true" />
+              <div class="absolute inset-0 bg-gradient-to-t from-charcoal/50 to-transparent" aria-hidden="true"></div>
+            </div>
+            <div class="flex flex-1 flex-col p-8 pt-7">
+              <blockquote class="flex-1 font-serif text-xl leading-snug text-charcoal md:text-2xl">“The difference is editorial. Every property felt considered—nothing was pushed for the sake of a closing.”</blockquote>
+              <figcaption class="mt-8 flex items-center gap-4 border-t border-charcoal/10 pt-6">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=112&h=112&q=80" alt="" class="h-14 w-14 shrink-0 rounded-full object-cover ring-2 ring-champagne/25" width="56" height="56" loading="lazy" decoding="async" aria-hidden="true" />
+                <div>
+                  <p class="text-sm font-medium text-charcoal">Marcus T.</p>
+                  <p class="mt-1 text-xs uppercase tracking-[0.2em] text-charcoal/45">Founder · New York</p>
+                </div>
+              </figcaption>
+            </div>
+          </figure>
+          <figure class="home-testimonial flex h-full flex-col overflow-hidden rounded-md border border-charcoal/8 bg-white shadow-md ring-1 ring-charcoal/[0.04]">
+            <div class="relative h-36 shrink-0 overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1600607687644-c7171b42498f?auto=format&fit=crop&w=800&q=80" alt="" class="h-full w-full object-cover" width="800" height="400" loading="lazy" decoding="async" aria-hidden="true" />
+              <div class="absolute inset-0 bg-gradient-to-t from-charcoal/50 to-transparent" aria-hidden="true"></div>
+            </div>
+            <div class="flex flex-1 flex-col p-8 pt-7">
+              <blockquote class="flex-1 font-serif text-xl leading-snug text-charcoal md:text-2xl">“They understood the architecture as deeply as the numbers. That is rare—and worth every basis point.”</blockquote>
+              <figcaption class="mt-8 flex items-center gap-4 border-t border-charcoal/10 pt-6">
+                <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=112&h=112&q=80" alt="" class="h-14 w-14 shrink-0 rounded-full object-cover ring-2 ring-champagne/25" width="56" height="56" loading="lazy" decoding="async" aria-hidden="true" />
+                <div>
+                  <p class="text-sm font-medium text-charcoal">Amira K.</p>
+                  <p class="mt-1 text-xs uppercase tracking-[0.2em] text-charcoal/45">Design patron · Dubai</p>
+                </div>
+              </figcaption>
+            </div>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- Philosophy -->
+    <section class="border-t border-charcoal/5 bg-white py-20 md:py-28" aria-labelledby="philosophy-heading" id="philosophy-section" data-api-section="philosophy">
+      <div class="mx-auto grid max-w-7xl gap-16 px-5 md:grid-cols-2 md:items-center md:gap-24 md:px-8">
+        <div class="order-2 md:order-1">
+          <p class="text-xs uppercase tracking-[0.4em] text-champagne">Philosophy</p>
+          <h2 id="philosophy-heading" class="mt-4 font-serif text-4xl leading-tight text-charcoal md:text-5xl">Editorial calm.<br />Architectural rigor.</h2>
+          <p class="mt-8 text-sm leading-relaxed text-charcoal/70 md:text-base">We represent a narrow collection of properties chosen for provenance, light, and lineage. No noise—only narrative, materials, and the quiet confidence of true scarcity.</p>
+          <a href="about.html" class="mt-10 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.28em] text-charcoal underline decoration-champagne/50 underline-offset-8 transition hover:decoration-champagne">Our heritage</a>
+        </div>
+        <article class="order-1 md:order-2">
+          <div class="grid grid-cols-12 gap-3 md:gap-4">
+            <figure class="col-span-12 overflow-hidden rounded-md shadow-lg ring-1 ring-charcoal/5 md:col-span-8 md:row-span-2">
+              <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80" alt="Sunlit interior with sculptural staircase" class="aspect-[4/5] w-full object-cover md:min-h-[28rem] md:max-h-[32rem] md:object-cover" width="1200" height="1200" loading="lazy" decoding="async" />
+              <figcaption class="mt-3 text-xs uppercase tracking-[0.25em] text-charcoal/45">Residence study — replace via CMS</figcaption>
+            </figure>
+            <figure class="col-span-6 overflow-hidden rounded-md shadow-md ring-1 ring-charcoal/5 md:col-span-4">
+              <img src="https://images.unsplash.com/photo-1600585154084-4e5fe7c39198?auto=format&fit=crop&w=700&q=80" alt="Architectural detail of interior arches" class="aspect-square w-full object-cover md:aspect-[16/11]" width="700" height="700" loading="lazy" decoding="async" />
+              <figcaption class="sr-only">Arched gallery</figcaption>
+            </figure>
+            <figure class="col-span-6 overflow-hidden rounded-md shadow-md ring-1 ring-charcoal/5 md:col-span-4">
+              <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=700&q=80" alt="Stone and wood interior vignette" class="aspect-square w-full object-cover md:aspect-[16/11]" width="700" height="700" loading="lazy" decoding="async" />
+              <figcaption class="sr-only">Materials palette</figcaption>
+            </figure>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="border-t border-charcoal/5 bg-[#fbfaf8] py-20 md:py-28" aria-labelledby="faq-heading" id="faq-section" data-api-section="faq">
+      <div class="mx-auto max-w-7xl px-5 md:px-8">
+        <div class="grid gap-14 lg:grid-cols-12 lg:gap-16">
+          <div class="lg:col-span-4">
+            <p class="text-xs uppercase tracking-[0.4em] text-champagne">FAQ</p>
+            <h2 id="faq-heading" class="mt-3 font-serif text-4xl leading-tight text-charcoal md:text-5xl">The questions principals ask first.</h2>
+            <p class="mt-6 text-sm leading-relaxed text-charcoal/65 md:text-base">Straight answers—no jargon, no obligation. Replace with live policy copy as your jurisdictions require.</p>
+            <figure class="mt-10 hidden overflow-hidden rounded-md shadow-lg ring-1 ring-charcoal/8 lg:block">
+              <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=900&q=80" alt="Tropical luxury estate with pool and palm trees" class="aspect-[4/5] w-full object-cover" width="900" height="1125" loading="lazy" decoding="async" />
+              <figcaption class="sr-only">Atmosphere</figcaption>
+            </figure>
+            <a href="contact.html" class="mt-8 inline-flex rounded-sm border border-charcoal/15 bg-white px-6 py-3 text-xs font-medium uppercase tracking-[0.25em] text-charcoal shadow-sm transition hover:border-champagne hover:text-champagne lg:mt-8">Speak with a director</a>
+          </div>
+          <div class="home-faq rounded-md border border-charcoal/8 bg-white px-6 py-2 shadow-md ring-1 ring-charcoal/[0.04] md:px-8 md:py-4 lg:col-span-7 lg:col-start-6">
+            <details class="group">
+              <summary class="flex items-center justify-between gap-6 py-5 text-left text-sm font-medium text-charcoal md:text-base">How do private viewings work?</summary>
+              <div class="border-t border-charcoal/5 pb-5 pt-4 text-sm leading-relaxed text-charcoal/65">Viewings are scheduled directly with a lead advisor. We confirm identity and liquidity context in advance, then coordinate access with sellers or estate managers—often after hours or via separate entrance protocols.</div>
+            </details>
+            <details class="group">
+              <summary class="flex items-center justify-between gap-6 py-5 text-left text-sm font-medium text-charcoal md:text-base">Do you represent both buyers and sellers?</summary>
+              <div class="border-t border-charcoal/5 pb-5 pt-4 text-sm leading-relaxed text-charcoal/65">Yes, on a selective basis. Where a conflict could arise, we disclose it early and align with independent counsel. Many of our mandates are exclusive or off-market on one side only.</div>
+            </details>
+            <details class="group">
+              <summary class="flex items-center justify-between gap-6 py-5 text-left text-sm font-medium text-charcoal md:text-base">What geographies do you cover?</summary>
+              <div class="border-t border-charcoal/5 pb-5 pt-4 text-sm leading-relaxed text-charcoal/65">We maintain active corridors across the Americas, UK &amp; Europe, and select Middle Eastern markets. Engagements outside those regions are handled through vetted partner firms under Aurelia oversight.</div>
+            </details>
+            <details class="group">
+              <summary class="flex items-center justify-between gap-6 py-5 text-left text-sm font-medium text-charcoal md:text-base">How are fees structured?</summary>
+              <div class="border-t border-charcoal/5 pb-5 pt-4 text-sm leading-relaxed text-charcoal/65">Advisory fees reflect scope—acquisition, disposition, or long-term stewardship—and are agreed in writing before diligence begins. We do not monetize third-party referrals without disclosure.</div>
+            </details>
+            <details class="group">
+              <summary class="flex items-center justify-between gap-6 py-5 text-left text-sm font-medium text-charcoal md:text-base">Can listings integrate with our website later?</summary>
+              <div class="border-t border-charcoal/5 pb-5 pt-4 text-sm leading-relaxed text-charcoal/65">This static build is structured for exactly that: section roots use <code class="rounded bg-charcoal/[0.06] px-1.5 py-0.5 font-mono text-[0.8em]">data-api-section</code> hooks so a CMS, headless API, or edge function can hydrate content without redesigning the layout.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer-mount" data-component="site-footer"></div>
+  <script src="js/site-shell.js" defer></script>
+  <script src="js/home-slider.js" defer></script>
+</body>
+</html>
